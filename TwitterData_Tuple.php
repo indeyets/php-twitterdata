@@ -13,6 +13,9 @@ class TwitterData_Tuple
 
     public function setKey($k)
     {
+        if (false === mb_ereg('^[a-zA-Z_].*$', $k))
+            throw new UnexpectedValueException('invalid key of tuple. should start from alphanumeric or underscore');
+
         $this->key = $k;
     }
 
