@@ -85,4 +85,10 @@ class TestSerialize extends PHPUnit_Framework_TestCase
         $tuple = new TwitterData_Tuple('key', '  value');
         $this->assertEquals('$key value', (string)$tuple);
     }
+
+    public function testHighLevel()
+    {
+        $data = array('key' => 'value', 'key2' => 'value2');
+        $this->assertEquals('$key value $key2 value2', array_to_TwitterData($data));
+    }
 }

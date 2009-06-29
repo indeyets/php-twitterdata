@@ -2,6 +2,16 @@
 
 class TwitterData_Frame
 {
+    public static function initFromKeyValueArray(array $data)
+    {
+        $tuples = array();
+        foreach ($data as $k => $v) {
+            $tuples[] = new TwitterData_Tuple($k, $v);
+        }
+
+        return new TwitterData_Frame('', $tuples);
+    }
+
     private $subject = '';
     private $tuples;
 
