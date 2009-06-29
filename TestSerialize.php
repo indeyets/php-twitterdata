@@ -64,5 +64,19 @@ class TestSerialize extends PHPUnit_Framework_TestCase
             } catch (UnexpectedValueException $e) {
             }
         }
+
+        // correct namespace
+        try {
+            new TwitterData_Tuple('test>namespace', 'val');
+        } catch (UnexpectedValueException $e) {
+            $this->fail();
+        }
+
+        // incorrect namespace
+        try {
+            new TwitterData_Tuple('test>bad>namespace', 'val');
+            $this->fail();
+        } catch (UnexpectedValueException $e) {
+        }
     }
 }
