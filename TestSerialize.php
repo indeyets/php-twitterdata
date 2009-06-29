@@ -9,10 +9,16 @@ class TestSerialize extends PHPUnit_Framework_TestCase
 {
     public function testSimple()
     {
-        $arr = array('key' => 'value');
-        $this->assertEquals('$key value', TwitterData::serialize($arr));
+        $tuple = new TwitterData_Tuple('key', 'value');
+        $this->assertEquals('$key value', (string)$tuple);
 
-        $arr = array('key' => 'value', 'key2' => 'value2');
-        $this->assertEquals('$key value $key2 value2', TwitterData::serialize($arr));
+        $frame = new TwitterData_Frame('', array($tuple, new TwitterData_Tuple('key2', 'value2')));
+        $this->assertEquals('$key value $key2 value2', (string)$frame);
+    }
+
+    public function testLiteralDollar()
+    {
+        $tuple = new TwitterData_Tuple('key', '$value');
+        $this->assertEquals('$key $$value', (string)$tuple);
     }
 }
