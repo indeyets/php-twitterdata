@@ -13,6 +13,9 @@ class TwitterData_Tuple
 
     public function setKey($k)
     {
+        if (!is_string($k))
+            throw new InvalidArgumentException();
+
         if (false === mb_ereg('^[a-zA-Z_]([a-zA-Z0-9_]+)?(>[a-zA-Z0-9_]+)?$', $k))
             throw new UnexpectedValueException('invalid key of tuple');
 
@@ -21,6 +24,14 @@ class TwitterData_Tuple
 
     public function setValue($v)
     {
+        $v = ltrim($v);
+
+        if (!is_string($v))
+            throw new InvalidArgumentException();
+
+        if (strlen($v) == 0)
+            throw new UnexpectedValueException('tuple-value can not be empty');
+
         $this->value = $v;
     }
 

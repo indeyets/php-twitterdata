@@ -11,9 +11,6 @@ class TestSerialize extends PHPUnit_Framework_TestCase
     {
         $tuple = new TwitterData_Tuple('key', 'value');
         $this->assertEquals('$key value', (string)$tuple);
-
-        $tuple = new TwitterData_Tuple('key', '$value');
-        $this->assertEquals('$key $$value', (string)$tuple);
     }
 
     public function testSimpleFrame()
@@ -78,5 +75,14 @@ class TestSerialize extends PHPUnit_Framework_TestCase
             $this->fail();
         } catch (UnexpectedValueException $e) {
         }
+    }
+
+    public function testTupleValues()
+    {
+        $tuple = new TwitterData_Tuple('key', '$value');
+        $this->assertEquals('$key $$value', (string)$tuple);
+
+        $tuple = new TwitterData_Tuple('key', '  value');
+        $this->assertEquals('$key value', (string)$tuple);
     }
 }
