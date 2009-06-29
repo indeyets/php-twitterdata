@@ -2,6 +2,7 @@
 
 require 'TwitterData_Tuple.php';
 require 'TwitterData_Frame.php';
+require 'TwitterData_Message.php';
 
 // class TwitterData
 // {

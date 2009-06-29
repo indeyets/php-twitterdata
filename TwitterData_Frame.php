@@ -25,9 +25,14 @@ class TwitterData_Frame
         $this->tuples = $tuples;
     }
 
+    public function exportableFormat($include_leading_terminator = false)
+    {
+        return $this->subject().$this->tuples($include_leading_terminator);
+    }
+
     public function __toString()
     {
-        return $this->subject().implode(' ', $this->tuples);
+        return $this->exportableFormat();
     }
 
     private function subject()
@@ -38,6 +43,13 @@ class TwitterData_Frame
         return $this->subject.' ';
     }
 
+    private function tuples($include_leading_terminator)
+    {
+        if (count($this->tuples) == 0)
+            return '';
+
+        return implode(' ', $this->tuples).($include_leading_terminator ? '$' : '');
+    }
 
     private static function throwIfNotTuple($v)
     {
