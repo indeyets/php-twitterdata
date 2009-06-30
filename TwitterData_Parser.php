@@ -28,40 +28,34 @@ class TwitterData_Parser_Callback implements TwitterData_ParserInterface
 
     public function messageStarted()
     {
-        echo __METHOD__."\n";
         $msg = new TwitterData_Message();
         array_push($this->buffer, $msg);
     }
 
     public function messageEnded()
     {
-        echo __METHOD__."\n";
         $this->msg = array_pop($this->buffer);
     }
 
     public function frameStarted()
     {
-        echo __METHOD__."\n";
         $frame = new TwitterData_Frame();
         array_push($this->buffer, $frame);
     }
 
     public function frameEnded()
     {
-        echo __METHOD__."\n";
         $frame = array_pop($this->buffer);
         $this->bufferTip()->addFrame($frame);
     }
 
     public function foundSubject($subject)
     {
-        echo __METHOD__."\n";
         $this->bufferTip()->setSubject($subject);
     }
 
     public function foundTuple($key, $value)
     {
-        echo __METHOD__."\n";
         $this->bufferTip()->addTuple(new TwitterData_Tuple($key, $value));
     }
 
@@ -98,18 +92,22 @@ class TwitterData_Parser
 
         $pos = 0;
         $len = mb_strlen($string);
-        mb_ereg_search_init($string, '(.*?[a-zA-Z0-9_])\\$[ ]');
+        mb_ereg_search_init($string, '(.*?[a-zA-Z0-9_])\\$(?:[ ]|$)');
 
         if (true === mb_ereg_search()) {
             // multiframe message
-            mb_ereg_search_init($string, '(.*?[a-zA-Z0-9_])(?:\\$[ ]|$)');
+            mb_ereg_search_init($string, '(.*?[a-zA-Z0-9_])(?:\\$[ ]|\\$$|$)');
 
             $frames = array();
 
             while (true === mb_ereg_search()) {
                 $parts = mb_ereg_search_getregs();
                 $frames[] = $parts[1];
+
                 $pos += mb_strlen($parts[0]);
+                if ($pos >= $len)
+                    break;
+
                 mb_ereg_search_setpos($pos);
             };
             if ($pos < $len) {
