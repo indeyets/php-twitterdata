@@ -64,4 +64,11 @@ class TestParser extends PHPUnit_Framework_TestCase
         ;
         $this->assertEquals($expected, $parser->export());
     }
+
+    public function testHighLevel()
+    {
+        $orig = 'subject $var val $var2 val $var val2$ subj2';
+        $expected = array('var' => 'val2', 'var2' => 'val');
+        $this->assertEquals($expected, TwitterData_to_array($orig));
+    }
 }

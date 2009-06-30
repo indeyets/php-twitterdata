@@ -40,7 +40,6 @@ class TwitterData_Parser_OOPGenerator implements TwitterData_ParserInterface
 
     public function foundSubject($subject)
     {
-        echo __METHOD__."\n";
         $this->bufferTip()->setSubject($subject);
     }
 
