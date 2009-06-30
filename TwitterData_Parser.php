@@ -104,7 +104,7 @@ class TwitterData_Parser
             $string = mb_substr($string, mb_strlen($subject) + 1);
         }
 
-        mb_ereg_search_init($string, '[ ]*\\$([a-zA-Z0-9_]+)[ ]+(.*?)(?=(?:[ ][$][^$])|$)');
+        mb_ereg_search_init($string, '[ ]*\\$([a-zA-Z0-9>_]+)[ ]+(.*?)(?=(?:[ ][$][^$])|$)');
 
         $tuples = array();
         $pos = 0;
