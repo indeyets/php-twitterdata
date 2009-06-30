@@ -1,6 +1,15 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
-class TwitterData_Parser_ArrayGenerator implements TwitterData_ParserInterface
+/**
+ * This class generates nested array-structure by connecting to parser
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
+class TwitterData_Parser_ArrayGenerator implements TwitterData_Parser_CallbackInterface
 {
     private $buffer;
     private $msg;

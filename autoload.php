@@ -1,4 +1,7 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
 function TwitterData_autoload($classname)
 {

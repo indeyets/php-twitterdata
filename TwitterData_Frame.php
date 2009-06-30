@@ -1,5 +1,14 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
+/**
+ * Object of this class represents single TwitterData-frame (subject + array of tuples)
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
 class TwitterData_Frame
 {
     public static function initFromKeyValueArray(array $data)

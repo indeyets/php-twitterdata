@@ -1,6 +1,15 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
-interface TwitterData_ParserInterface
+/**
+ * classes which generate data-structures based on parsing-data must implement this interface
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
+interface TwitterData_Parser_CallbackInterface
 {
     public function messageStarted();
     public function messageEnded();
@@ -11,6 +20,12 @@ interface TwitterData_ParserInterface
     public function export();
 }
 
+/**
+ * SAX-style parser for TwitterData messages
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
 class TwitterData_Parser
 {
     private $callback;
@@ -20,8 +35,8 @@ class TwitterData_Parser
         if (null === $callback_class)
             $callback_class = 'TwitterData_Parser_OOPGenerator';
 
-        if (!in_array('TwitterData_ParserInterface', class_implements($callback_class)))
-            throw new InvalidArgumentException('Callback has to implement TwitterData_ParserInterface');
+        if (!in_array('TwitterData_Parser_CallbackInterface', class_implements($callback_class)))
+            throw new InvalidArgumentException('Callback has to implement TwitterData_Parser_CallbackInterface');
 
         $this->callback = new $callback_class;
         $this->parseMessage($string);

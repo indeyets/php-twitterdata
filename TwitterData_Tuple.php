@@ -1,5 +1,14 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
+/**
+ * Object of this class represents single TwitterData-tuple (key + value)
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
 class TwitterData_Tuple
 {
     private $key;

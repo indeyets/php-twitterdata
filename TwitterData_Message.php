@@ -1,5 +1,14 @@
 <?php
+/**
+ * @license MIT-style. see LICENCE file
+ */
 
+/**
+ * Object of this class represents single TwitterData-message (array of frames)
+ *
+ * @package TwitterData
+ * @author Alexey Zakhlestin
+ */
 class TwitterData_Message
 {
     private $frames;
