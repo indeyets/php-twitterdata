@@ -35,6 +35,11 @@ class TwitterData_Frame
         $this->tuples = $tuples;
     }
 
+    public function addTuple(TwitterData_Tuple $tuple)
+    {
+        $this->tuples[] = $tuple;
+    }
+
     public function exportableFormat($include_leading_terminator = false)
     {
         return $this->subject().$this->tuples($include_leading_terminator);
