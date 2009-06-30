@@ -15,6 +15,9 @@ class TestSerialize extends PHPUnit_Framework_TestCase
 
     public function testSimpleFrame()
     {
+        $frame = new TwitterData_Frame('subject', array());
+        $this->assertEquals('subject', (string)$frame);
+
         $frame = new TwitterData_Frame('', array(
             new TwitterData_Tuple('key', 'value'),
             new TwitterData_Tuple('key2', 'value2')

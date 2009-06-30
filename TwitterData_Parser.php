@@ -11,60 +11,6 @@ interface TwitterData_ParserInterface
     public function export();
 }
 
-class TwitterData_Parser_Callback implements TwitterData_ParserInterface
-{
-    private $buffer;
-    private $msg;
-
-    public function __construct()
-    {
-        $this->buffer = array();
-    }
-
-    private function bufferTip()
-    {
-        return $this->buffer[count($this->buffer) - 1];
-    }
-
-    public function messageStarted()
-    {
-        $msg = new TwitterData_Message();
-        array_push($this->buffer, $msg);
-    }
-
-    public function messageEnded()
-    {
-        $this->msg = array_pop($this->buffer);
-    }
-
-    public function frameStarted()
-    {
-        $frame = new TwitterData_Frame();
-        array_push($this->buffer, $frame);
-    }
-
-    public function frameEnded()
-    {
-        $frame = array_pop($this->buffer);
-        $this->bufferTip()->addFrame($frame);
-    }
-
-    public function foundSubject($subject)
-    {
-        $this->bufferTip()->setSubject($subject);
-    }
-
-    public function foundTuple($key, $value)
-    {
-        $this->bufferTip()->addTuple(new TwitterData_Tuple($key, $value));
-    }
-
-    public function export()
-    {
-        return $this->msg;
-    }
-}
-
 class TwitterData_Parser
 {
     private $callback;
@@ -72,7 +18,7 @@ class TwitterData_Parser
     public function __construct($string,  $callback_class = null)
     {
         if (null === $callback_class)
-            $callback_class = 'TwitterData_Parser_Callback';
+            $callback_class = 'TwitterData_Parser_OOPGenerator';
 
         if (!in_array('TwitterData_ParserInterface', class_implements($callback_class)))
             throw new InvalidArgumentException('Callback has to implement TwitterData_ParserInterface');
@@ -132,7 +78,7 @@ class TwitterData_Parser
             $subject = '';
         } else {
             // we have subject
-            mb_ereg_search_init($string, '(.*?)[ ]\\$.*');
+            mb_ereg_search_init($string, '(.*?)([ ]\\$.*|$)');
             mb_ereg_search();
 
             $parts = mb_ereg_search_getregs();

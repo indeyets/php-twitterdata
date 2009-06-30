@@ -55,7 +55,7 @@ class TwitterData_Frame
         if (strlen($this->subject) == 0)
             return '';
 
-        return $this->subject.' ';
+        return $this->subject.(count($this->tuples) > 0 ? ' ' : '');
     }
 
     private function tuples($include_leading_terminator)
