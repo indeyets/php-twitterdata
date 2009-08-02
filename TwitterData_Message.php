@@ -18,10 +18,32 @@ class TwitterData_Message
         $this->frames = array();
     }
 
+    public function __set($key, $value)
+    {
+        if ('frames' === $key)
+            $this->setFrames($value);
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
+    public function __get($key)
+    {
+        if ('frames' === $key)
+            return $this->getFrames();
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
     public function addFrame(TwitterData_Frame $frame)
     {
         $this->frames[] = $frame;
         return $this;
+    }
+
+    public function setFrames(array $frames)
+    {
+        array_walk($frames, array(__CLASS__, 'throwIfNotFrame'));
+        $this->frames = $frames;
     }
 
 
@@ -45,5 +67,12 @@ class TwitterData_Message
         }
 
         return $result;
+    }
+
+
+    private static function throwIfNotFrame($v)
+    {
+        if (!is_object($v) or !($v instanceof TwitterData_Frame))
+            throw new InvalidArgumentException('setFrames() expects array of TwitterData_Frames');
     }
 }

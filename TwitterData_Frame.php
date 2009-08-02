@@ -30,6 +30,26 @@ class TwitterData_Frame
         $this->setTuples($tuples);
     }
 
+    public function __set($key, $value)
+    {
+        if ('subject' === $key)
+            $this->setSubject($value);
+        elseif ('tuples' === $key)
+            $this->setTuples($value);
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
+    public function __get($key)
+    {
+        if ('subject' === $key)
+            return $this->getSubject();
+        elseif ('tuples' === $key)
+            return $this->getTuples();
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
     public function setSubject($subject)
     {
         if (!is_string($subject))

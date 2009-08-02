@@ -20,6 +20,26 @@ class TwitterData_Tuple
         $this->setValue($v);
     }
 
+    public function __set($key, $value)
+    {
+        if ('key' === $key)
+            $this->setKey($value);
+        elseif ('value' === $key)
+            $this->setValue($value);
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
+    public function __get($key)
+    {
+        if ('key' === $key)
+            return $this->getKey();
+        elseif ('value' === $key)
+            return $this->getValue();
+        else
+            throw new UnexpectedValueException("There's no such field in this object: ".$key);
+    }
+
     public function setKey($k)
     {
         if (!is_string($k))
