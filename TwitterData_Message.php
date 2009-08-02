@@ -24,6 +24,13 @@ class TwitterData_Message
         return $this;
     }
 
+
+    public function getFrames()
+    {
+        return $this->frames;
+    }
+
+
     public function __toString()
     {
         $result = '';

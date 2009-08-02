@@ -44,6 +44,18 @@ class TwitterData_Tuple
         $this->value = $v;
     }
 
+
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+
     private function escapedValue()
     {
         return str_replace('$', '$$', $this->value);
