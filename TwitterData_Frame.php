@@ -61,7 +61,7 @@ class TwitterData_Frame
     public function setTuples(array $tuples)
     {
         array_walk($tuples, array(__CLASS__, 'throwIfNotTuple'));
-        $this->tuples = $tuples;
+        $this->tuples = new ArrayObject($tuples);
     }
 
     public function addTuple(TwitterData_Tuple $tuple)
@@ -104,7 +104,7 @@ class TwitterData_Frame
         if (count($this->tuples) == 0)
             return '';
 
-        return implode(' ', $this->tuples).($include_leading_terminator ? '$' : '');
+        return implode(' ', $this->tuples->getArrayCopy()).($include_leading_terminator ? '$' : '');
     }
 
     private static function throwIfNotTuple($v)

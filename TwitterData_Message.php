@@ -15,7 +15,7 @@ class TwitterData_Message
 
     public function __construct()
     {
-        $this->frames = array();
+        $this->frames = new ArrayObject();
     }
 
     public function __set($key, $value)
@@ -43,7 +43,7 @@ class TwitterData_Message
     public function setFrames(array $frames)
     {
         array_walk($frames, array(__CLASS__, 'throwIfNotFrame'));
-        $this->frames = $frames;
+        $this->frames = new ArrayObject($frames);
     }
 
 

@@ -94,4 +94,15 @@ class TestSerialize extends PHPUnit_Framework_TestCase
         $data = array('key' => 'value', 'key2' => 'value2');
         $this->assertEquals('$key value $key2 value2', TwitterData::array_to_TwitterData($data));
     }
+
+    public function testSimplifiedApi()
+    {
+        $message = new TwitterData_Message();
+        $message->frames[] = new TwitterData_Frame('subject');
+        $message->frames[0]->tuples[] = new TwitterData_Tuple('foo', 'bar');
+        $message->frames[0]->tuples[] = new TwitterData_Tuple('key', 'val');
+        $message->frames[0]->tuples[0]->value = 'baz';
+
+        $this->assertEquals('subject $foo baz $key val', (string)$message);
+    }
 }
