@@ -11,15 +11,31 @@ class TestParser extends PHPUnit_Framework_TestCase
     {
         $orig = '$var val';
         $parser = new TwitterData_Parser($orig);
-        $this->assertEquals($orig, (string)$parser->export());
+        $message = $parser->export();
+        $this->assertEquals($orig, (string)$message);
+
+        $tuple = $message->frames[0]->tuples[0];
+        $this->assertEquals('var', $tuple->key);
+        $this->assertEquals('val', $tuple->value);
 
         $orig = 'subject';
         $parser = new TwitterData_Parser($orig);
-        $this->assertEquals($orig, (string)$parser->export());
+        $message = $parser->export();
+        $this->assertEquals($orig, (string)$message);
+        $this->assertEquals('subject', $message->frames[0]->subject);
 
         $orig = '$var val $var2 val $var val';
         $parser = new TwitterData_Parser($orig);
-        $this->assertEquals($orig, (string)$parser->export());
+        $message = $parser->export();
+        $this->assertEquals($orig, (string)$message);
+
+        $tuples = $message->frames[0]->tuples;
+        $this->assertEquals('var', $tuples[0]->key);
+        $this->assertEquals('val', $tuples[0]->value);
+        $this->assertEquals('var2', $tuples[1]->key);
+        $this->assertEquals('val', $tuples[1]->value);
+        $this->assertEquals('var', $tuples[2]->key);
+        $this->assertEquals('val', $tuples[2]->value);
 
         $orig = 'subject $var val $var2 val $var val';
         $parser = new TwitterData_Parser($orig);
